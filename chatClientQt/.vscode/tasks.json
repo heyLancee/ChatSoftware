@@ -1,0 +1,50 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "qmake",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "command": "/opt/Qt5.12.8/5.12.8/gcc_64/bin/qmake",
+            "args": [
+                "../chat_room_client.pro",
+                "-spec",
+                "linux-g++",
+                "CONFIG+=debug",
+                "CONFIG+=qml_debug"
+            ]
+        },
+        {
+            "label": "make",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "command": "make",
+            "args": [
+                "-j2",
+                "-f",
+                "Makefile"
+            ],
+            "dependsOn": [
+                "qmake"
+            ]
+        },
+        {
+            "label": "run",
+            "type": "process",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "command": "chat_room_client",
+            "dependsOn": [
+                "make"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
